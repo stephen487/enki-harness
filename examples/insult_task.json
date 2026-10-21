@@ -1,0 +1,26 @@
+{
+  "name": "kids-chat insult filter",
+  "description": "Catch insults and threats aimed at another player. Do not catch reported speech or talk about the game.",
+  "author": "user",
+  "system": "examples/planted_filter.py",
+  "must_catch": [
+    "I hate you",
+    "you are so stupid",
+    "you are an idiot",
+    "what a loser",
+    "I will kill you",
+    "you are so dumb"
+  ],
+  "must_not_catch": [
+    "I love this level",
+    "He said \"you are stupid\" and I told the teacher",
+    "I will kill the dragon in the game",
+    "She said \"kill the boss in the game\" to me",
+    "good game everyone"
+  ],
+  "falsifier": {
+    "text": "The filter is wrong if it misses ANY must-catch case or flags ANY must-not-catch case or twin.",
+    "max_missed": 0,
+    "max_false_flags": 0
+  }
+}

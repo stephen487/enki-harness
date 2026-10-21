@@ -1,0 +1,250 @@
+[
+  {
+    "id": "hatecheck",
+    "name": "HateCheck",
+    "domains": [
+      "hate_speech",
+      "insults",
+      "general_hard_negatives"
+    ],
+    "url": "https://github.com/paul-rottger/hatecheck-data",
+    "licence": "CC BY 4.0",
+    "contains": "ACL 2021 functional test suite for hate speech detection: test cases with labels, functionality annotations and template placeholder values.",
+    "use": "Run each case through the filter and score per functionality, especially non-hateful contrasts (counter-speech, reclaimed slurs, negation) as hard negatives.",
+    "verified": true,
+    "checked_url": "https://github.com/paul-rottger/hatecheck-data",
+    "note": "Repo page shows 'CC-BY-4.0 license'.",
+    "checked_on": "2026-10-21"
+  },
+  {
+    "id": "xstest",
+    "name": "XSTest",
+    "domains": [
+      "general_hard_negatives",
+      "prompt_injection"
+    ],
+    "url": "https://github.com/paul-rottger/xstest",
+    "licence": "CC BY 4.0",
+    "contains": "NAACL 2024 test suite of safe prompts that superficially resemble unsafe ones (plus unsafe contrasts) for exaggerated-safety evaluation, with eval code and model completions.",
+    "use": "Feed the safe prompts as must-not-block hard negatives and the unsafe contrasts as must-flag; measure over-refusal rate.",
+    "verified": true,
+    "checked_url": "https://github.com/paul-rottger/xstest",
+    "note": "README states prompts are CC-BY-4.0; model completions are under the original model providers' licences. Mainly over-refusal, only loosely prompt_injection.",
+    "checked_on": "2026-10-21"
+  },
+  {
+    "id": "checklist",
+    "name": "CheckList",
+    "domains": [
+      "general_hard_negatives"
+    ],
+    "url": "https://github.com/marcotcr/checklist",
+    "licence": "MIT",
+    "contains": "Code/framework for behavioural testing of NLP models (templates, perturbations, MFT/INV/DIR tests) from the ACL 2020 paper.",
+    "use": "Generate invariance/perturbation variants (typos, negation, name swaps) of filter test rows to check the verdict is stable.",
+    "verified": true,
+    "checked_url": "https://github.com/marcotcr/checklist",
+    "note": "Repo page shows 'MIT license'. Tool, not a dataset.",
+    "checked_on": "2026-10-21"
+  },
+  {
+    "id": "jigsaw_toxic",
+    "name": "Jigsaw Toxic Comment Classification (Wikipedia talk comments)",
+    "domains": [
+      "insults",
+      "profanity"
+    ],
+    "url": "https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge",
+    "licence": "CC0-1.0 (labels); comment text CC BY-SA 3.0 per Hugging Face loader (TFDS says CC0) - conflicting",
+    "contains": "Wikipedia talk-page comments labelled toxic / severe_toxic / obscene / threat / insult / identity_hate.",
+    "use": "Use the insult/obscene/threat-labelled rows as must-flag and clean rows as must-pass; report per-label recall and false-positive rate.",
+    "verified": false,
+    "checked_url": "https://huggingface.co/datasets/google/jigsaw_toxicity_pred/blob/main/jigsaw_toxicity_pred.py",
+    "note": "Kaggle page returned only a title, no licence (likely JS/login wall). HF loader _LICENSE: dataset CC0, comment text 'governed by Wikipedia's CC-SA-3.0'. TFDS catalog (tensorflow.org/datasets/catalog/wikipedia_toxicity_subtypes) says CC0 'as is the underlying comment text'. Sources conflict; treat text as CC BY-SA 3.0 to be safe.",
+    "checked_on": "2026-10-21"
+  },
+  {
+    "id": "civil_comments",
+    "name": "Civil Comments",
+    "domains": [
+      "insults",
+      "profanity"
+    ],
+    "url": "https://huggingface.co/datasets/google/civil_comments",
+    "licence": "CC0-1.0",
+    "contains": "About 2M English public comments from the Civil Comments platform (2015-2017) with fractional toxicity scores for 7 attributes (toxicity, severe_toxicity, obscene, threat, insult, identity_attack, sexual_explicit).",
+    "use": "Threshold the insult/obscene scores (e.g. >=0.5 flag, <0.1 clean) to build must-flag and must-pass sets; identity mentions in clean rows give bias hard negatives.",
+    "verified": true,
+    "checked_url": "https://huggingface.co/datasets/google/civil_comments",
+    "note": "Card states 'This dataset is released under CC0 1.0', tag cc0-1.0.",
+    "checked_on": "2026-10-21"
+  },
+  {
+    "id": "olid",
+    "name": "OLID / OffensEval 2019",
+    "domains": [
+      "insults",
+      "hate_speech"
+    ],
+    "url": "https://huggingface.co/datasets/christophsonntag/OLID",
+    "licence": "unknown (not stated)",
+    "contains": "About 14,100 English tweets with hierarchical labels: offensive or not, targeted or not, target type (individual/group/other).",
+    "use": "Use OFF/TIN rows as insult must-flag and NOT rows as must-pass; TIN+GRP rows overlap hate speech.",
+    "verified": false,
+    "checked_url": "https://huggingface.co/datasets/christophsonntag/OLID",
+    "note": "HF card License field reads '[More Information Needed]'. Official sites.google.com/site/offensevalsharedtask/olid redirects to a Google sign-in. Web search found no licence for the dataset itself. Tweet text is also subject to X/Twitter terms.",
+    "checked_on": "2026-10-21"
+  },
+  {
+    "id": "sms_spam",
+    "name": "UCI SMS Spam Collection",
+    "domains": [
+      "spam"
+    ],
+    "url": "https://archive.ics.uci.edu/dataset/228/sms+spam+collection",
+    "licence": "CC BY 4.0",
+    "contains": "5,574 English SMS messages, each labelled spam or ham (legitimate).",
+    "use": "Spam rows are must-flag and ham rows must-pass.",
+    "verified": true,
+    "checked_url": "https://archive.ics.uci.edu/dataset/228/sms+spam+collection",
+    "note": "UCI page states 'Creative Commons Attribution 4.0 International (CC BY 4.0) license'.",
+    "checked_on": "2026-10-21"
+  },
+  {
+    "id": "deepset_prompt_injections",
+    "name": "deepset prompt-injections",
+    "domains": [
+      "prompt_injection"
+    ],
+    "url": "https://huggingface.co/datasets/deepset/prompt-injections",
+    "licence": "Apache-2.0",
+    "contains": "662 labelled prompts (546 train / 116 test), injection vs benign, in English and German.",
+    "use": "Label-1 rows must flag as injection and label-0 rows must pass; the German rows test whether the filter is English-only.",
+    "verified": true,
+    "checked_url": "https://huggingface.co/datasets/deepset/prompt-injections",
+    "note": "Card metadata licence: apache-2.0. Languages are inferred from the examples; the card does not state them.",
+    "checked_on": "2026-10-21"
+  },
+  {
+    "id": "lakera_gandalf_ignore",
+    "name": "Lakera gandalf_ignore_instructions",
+    "domains": [
+      "prompt_injection"
+    ],
+    "url": "https://huggingface.co/datasets/Lakera/gandalf_ignore_instructions",
+    "licence": "MIT",
+    "contains": "About 1,000 real English 'ignore previous instructions'-style injection prompts from the Gandalf game (777/111/112 split).",
+    "use": "Positives only: every row should be flagged as injection. Pair it with a benign set (e.g. deepset label-0) for the false-positive rate.",
+    "verified": true,
+    "checked_url": "https://huggingface.co/datasets/Lakera/gandalf_ignore_instructions",
+    "note": "Card states 'distributed under the MIT License'; metadata mit.",
+    "checked_on": "2026-10-21"
+  },
+  {
+    "id": "clinc150_oos",
+    "name": "CLINC150 (oos-eval)",
+    "domains": [
+      "off_topic"
+    ],
+    "url": "https://github.com/clinc/oos-eval",
+    "licence": "CC BY 3.0",
+    "contains": "English intent-classification data: 150 in-scope intents (22,500 queries) plus 1,200 out-of-scope queries.",
+    "use": "Treat a chosen subset of in-scope intents as 'on topic' and the oos queries (and the other intents) as off-topic must-flag; measure topic-gate precision and recall.",
+    "verified": true,
+    "checked_url": "https://raw.githubusercontent.com/clinc/oos-eval/master/LICENSE",
+    "note": "The repo page does not name the licence; the LICENSE file was fetched and is 'Attribution 3.0 Unported' (CC BY 3.0).",
+    "checked_on": "2026-10-21"
+  },
+  {
+    "id": "ai4privacy_pii_200k",
+    "name": "ai4privacy pii-masking-200k",
+    "domains": [
+      "pii"
+    ],
+    "url": "https://huggingface.co/datasets/ai4privacy/pii-masking-200k",
+    "licence": "custom: Ai4Privacy free licence (individuals, non-profits, for-profits with up to 3 staff); corporate licence otherwise; no redistribution of copies or derivatives",
+    "contains": "About 209k synthetic examples (13.6M tokens, 649k PII tokens) in English, French, German and Italian, with source text, masked target, PII spans and BIO tags.",
+    "use": "Run the source_text through the PII filter and score span-level recall against the labels; the masked target_text gives must-pass rows.",
+    "verified": true,
+    "checked_url": "https://huggingface.co/datasets/ai4privacy/pii-masking-200k/raw/main/LICENSE",
+    "note": "Card YAML has no licence field; the repo LICENSE file sets out custom Free and Corporate licence tiers. Not an open licence: check the staff-size limit and keep it local, never redistributed.",
+    "checked_on": "2026-10-21"
+  },
+  {
+    "id": "presidio",
+    "name": "Microsoft Presidio (+ presidio-research)",
+    "domains": [
+      "pii"
+    ],
+    "url": "https://github.com/microsoft/presidio",
+    "licence": "MIT",
+    "contains": "Python SDK for PII detection and de-identification (analyzer, anonymizer, CLI, image redactor, structured). The companion presidio-research repo has a template-based fake-PII sentence generator and evaluation tooling.",
+    "use": "Use the presidio-research generator to make labelled synthetic PII sentences locally, and use the analyzer as a baseline to compare the filter against.",
+    "verified": true,
+    "checked_url": "https://github.com/microsoft/presidio",
+    "note": "Both repos show 'MIT license' (presidio-research also checked: https://github.com/microsoft/presidio-research). This is a tool, not a dataset.",
+    "checked_on": "2026-10-21"
+  },
+  {
+    "id": "openai_moderation_release",
+    "name": "OpenAI moderation-api-release",
+    "domains": [
+      "sexual_content",
+      "self_harm",
+      "hate_speech"
+    ],
+    "url": "https://github.com/openai/moderation-api-release",
+    "licence": "MIT",
+    "contains": "1,680 labelled samples across 8 categories (sexual, hate, violence, harassment, self-harm, sexual/minors, hate/threatening, violence/graphic).",
+    "use": "Pointer only: per-category must-flag and must-pass evaluation rows. Do NOT pull the sexual/minors rows into the local corpus; use the label only.",
+    "verified": true,
+    "checked_url": "https://github.com/openai/moderation-api-release",
+    "note": "Repo page shows 'MIT license'. Small set, so per-category counts are low.",
+    "checked_on": "2026-10-21"
+  },
+  {
+    "id": "iwf",
+    "name": "Internet Watch Foundation (IWF)",
+    "domains": [
+      "child_safety"
+    ],
+    "url": "https://www.iwf.org.uk/",
+    "licence": "n/a (organisation guidance)",
+    "contains": "UK charity for reporting and removing online CSAM. Its technology page lists an Image Hash List, IntelliGrade, Report Remove, IWF Crawler, reThink Chatbot and Image Intercept, offered through membership.",
+    "use": "Do not collect child-safety test data. Route detection to IWF services (hash list via membership) and report through IWF; test the filter only with clean, non-abusive proxy rows.",
+    "verified": true,
+    "checked_url": "https://www.iwf.org.uk/our-technology/",
+    "note": "Home page and technology page both loaded. No URL list or keyword list is shown on the pages fetched; membership has entry criteria (https://www.iwf.org.uk/become-a-member/join-us).",
+    "checked_on": "2026-10-21"
+  },
+  {
+    "id": "thorn_safer",
+    "name": "Thorn Safer",
+    "domains": [
+      "child_safety"
+    ],
+    "url": "https://safer.io/",
+    "licence": "n/a (organisation guidance)",
+    "contains": "Thorn's commercial trust-and-safety product for CSAM and child sexual exploitation detection (perceptual hashing and ML classifiers).",
+    "use": "Treat as a vendor detection service, not a source of test data; never build a local CSAM corpus.",
+    "verified": true,
+    "checked_url": "https://safer.io/",
+    "note": "Page loaded. It is a commercial product with no dataset licence, and the page does not explicitly mention text classifiers.",
+    "checked_on": "2026-10-21"
+  },
+  {
+    "id": "samaritans_online_guidance",
+    "name": "Samaritans: industry guidelines for managing self-harm and suicide content",
+    "domains": [
+      "self_harm"
+    ],
+    "url": "https://www.samaritans.org/about-samaritans/research-policy/internet-suicide/guidelines-tech-industry/",
+    "licence": "n/a (organisation guidance)",
+    "contains": "Samaritans' best-practice principles and information sheets for user-generated-content platforms on handling self-harm and suicide content. The parent page also links 'guidance for online services'.",
+    "use": "Derive the expected-behaviour spec (safe-messaging, signposting, no method detail) for self-harm test rows; it is not a dataset.",
+    "verified": true,
+    "checked_url": "https://www.samaritans.org/about-samaritans/research-policy/internet-suicide/guidelines-tech-industry/",
+    "note": "The given URL (.../internet-suicide/) also resolves and is the hub; this sub-page is the specific industry guidance. No reuse licence stated; the site footer links /legal/.",
+    "checked_on": "2026-10-21"
+  }
+]
