@@ -57,6 +57,10 @@ def main(argv=None):
         s.add_argument("--system")
         s.add_argument("--json", action="store_true")
         s.add_argument("--out", help="write the JSON report to this file (used by the MCP server)")
+    s = sub.add_parser("judge", help="model-judge mode: repeat each case against an AI judge, report flag RATES")
+    s.add_argument("task", help="judge task .json (judge, reps, controls, cases, falsifier, max_calls)")
+    s.add_argument("--yes", action="store_true", help="do not ask before spending the judge calls")
+    s.add_argument("--json", action="store_true")
     s = sub.add_parser("export-shapes")
     s.add_argument("out", nargs="?", default=str(DATA / "shapes_export.json"))
     s = sub.add_parser("serve")
@@ -77,6 +81,9 @@ def main(argv=None):
     if a.cmd == "mcp":
         from . import mcp_server
         return mcp_server.main(allow=a.allow, use_cwd=not a.no_cwd_root)
+    if a.cmd == "judge":
+        from . import judge
+        return judge.main(a.task, yes=a.yes, as_json=a.json)
     if a.cmd in ("install", "uninstall"):
         from . import install
         return install.main(a.cmd, yes=a.yes, tools=a.tools, dry_run=a.dry_run, allow=getattr(a, "allow", []))

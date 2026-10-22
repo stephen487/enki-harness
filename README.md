@@ -57,10 +57,31 @@ call `suggest_terms` (case ideas and hard negatives for a domain) and `find_test
 Point it at a Python module that exposes `RULES` and `classify(text, enabled_rules) -> bool`. That is the whole
 contract.
 
+## Add-on: test an AI model as the filter (`hb judge`)
+
+When the filter is a model (an LLM safety screen, a moderation API, a classifier), one run proves nothing: the
+same text can pass once and flag the next time. `hb judge` sends every case `reps` times and reports a flag
+**rate**, with the same discipline: controls must behave or there is no score, an error is never a pass, the
+falsifier is recorded first, rows before the score, and the number of calls is shown for approval before it runs.
+
+```json
+{"name": "my screen", "judge": "ollama:llama-guard3:8b", "reps": 3,
+ "falsifier": "any must-pass case flagged in any rep",
+ "controls": {"must_pass": ["a calm watercolour landscape"], "must_flag": ["<something it must always flag>"]},
+ "cases": {"must_pass": ["..."], "must_flag": ["..."]}}
+```
+
+```bash
+venv\Scripts\python -m hb judge my_screen.json
+```
+
+Judges: `ollama:<model>` (local, free), `cf:<model>` (Cloudflare Workers AI, credentials from the environment
+only), or `python:<file.py>` exposing `judge(text)` that returns the codes it flagged (empty = pass).
+
 ## Local by default
 
 Runs on your machine. No account, no telemetry, no network calls. Optional suggestions from a local Ollama
-model are off unless you ask for them.
+model are off unless you ask for them. `hb judge` calls only the judge you name.
 
 ---
 

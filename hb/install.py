@@ -465,10 +465,19 @@ def main(cmd, yes=False, tools=None, dry_run=False, allow=(), env=None):
             continue
         tool_allow = list(allow)
         if cmd == "install" and not t.use_cwd and not tool_allow and not yes:
+            default = env.home / "Documents" / "enki-harness-projects"
             try:
-                folder = env.ask(f"  {t.label} has no project folder. Folder it may test filters in (blank = none): ").strip()
+                folder = env.ask(f"  {t.label} has no project folder. Folder it may test filters in "
+                                 f"[Enter = {default}, - = none]: ").strip()
             except EOFError:
+                folder = "-"                            # no answer possible: create nothing, allow nothing
+            if folder == "-":
                 folder = ""
+            elif not folder:                            # Enter: a one-click install should leave a working tool
+                folder = str(default)
+                if not dry_run:
+                    default.mkdir(parents=True, exist_ok=True)
+                    say(f"    created {default} - put the filters you want tested there")
             if folder and Path(folder).expanduser().is_dir():
                 tool_allow = [str(Path(folder).expanduser().resolve())]
             elif folder:

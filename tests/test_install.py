@@ -228,6 +228,45 @@ def test_claude_desktop_current_store_layout(tmp_path):
     assert "quit Claude Desktop fully first" in f.text
 
 
+def _desktop_args(f):
+    return json.loads((f.appdata / "Claude" / "claude_desktop_config.json").read_text(encoding="utf-8")
+                      )["mcpServers"]["enki-harness"]["args"]
+
+
+def test_enter_on_the_folder_question_allows_a_default_projects_folder(tmp_path):
+    """One-click: most people press Enter. Before, that left Claude Desktop refusing every filter."""
+    f = Fake(tmp_path, answers=["y", ""])
+    (f.appdata / "Claude").mkdir()
+    assert f.run("install", tools="claude-desktop") == 0
+    default = f.home / "Documents" / "enki-harness-projects"
+    assert default.is_dir()
+    assert _desktop_args(f)[-3:] == ["--allow", str(default.resolve()), "--no-cwd-root"]
+    assert "will refuse to run filters" not in f.text
+
+
+def test_dash_on_the_folder_question_still_means_no_folder(tmp_path):
+    f = Fake(tmp_path, answers=["y", "-"])
+    (f.appdata / "Claude").mkdir()
+    assert f.run("install", tools="claude-desktop") == 0
+    assert "--allow" not in _desktop_args(f)
+    assert not (f.home / "Documents" / "enki-harness-projects").exists()
+
+
+def test_no_answer_possible_creates_no_folder(tmp_path):
+    f = Fake(tmp_path, answers=["y"])                       # the folder question then hits EOF
+    (f.appdata / "Claude").mkdir()
+    assert f.run("install", tools="claude-desktop") == 0
+    assert "--allow" not in _desktop_args(f)
+    assert not (f.home / "Documents" / "enki-harness-projects").exists()
+
+
+def test_dry_run_enter_creates_no_folder(tmp_path):
+    f = Fake(tmp_path, answers=["y", ""])
+    (f.appdata / "Claude").mkdir()
+    assert f.run("install", tools="claude-desktop", dry_run=True) == 0
+    assert not (f.home / "Documents" / "enki-harness-projects").exists()
+
+
 def test_allow_must_be_a_folder(tmp_path):
     f = Fake(tmp_path).all_tools()
     assert f.run("install", yes=True, allow=[str(tmp_path / "nope")]) == 2
